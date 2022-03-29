@@ -1,5 +1,5 @@
 // f는 (item) => item.name 이런 형태
-const map = (f, iter) => {
+const map_filter_reduce = (f, iter) => {
   const res = [];
 
   for (const i of iter) {
@@ -39,9 +39,9 @@ const products = [
   {name: '바지', price: 25000}
 ];
 
-console.log(map(product => product.name, products));
+console.log(map_filter_reduce(product => product.name, products));
 console.log(filter(product => product.name === '긴팔티', products));
 
 const add = (acc, cur) => acc + cur;
-console.log(reduce(add, 0, map(product => product.price, products)));
-console.log(reduce(add, map(product => product.price, products))); // 10
+console.log(reduce(add, 0, map_filter_reduce(product => product.price, products)));
+console.log(reduce(add, map_filter_reduce(product => product.price, products))); // 10
