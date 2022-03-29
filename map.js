@@ -19,6 +19,18 @@ const filter = (f, iter) => {
   return res;
 };
 
+const reduce = (f, acc = 0, iter) => {
+  if (!iter) {
+    iter = acc[Symbol.iterator]();
+    acc = iter.next().value;
+  }
+
+  for (const i of iter) {
+    acc = f(acc, i);
+  }
+  return acc;
+};
+
 const products = [
   {name: '반팔티', price: 15000},
   {name: '긴팔티', price: 20000},
@@ -30,3 +42,6 @@ const products = [
 console.log(map(product => product.name, products));
 console.log(filter(product => product.name === '긴팔티', products));
 
+const add = (acc, cur) => acc + cur;
+console.log(reduce(add, 0, map(product => product.price, products)));
+console.log(reduce(add, map(product => product.price, products))); // 10
