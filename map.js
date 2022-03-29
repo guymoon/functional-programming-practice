@@ -9,6 +9,16 @@ const map = (f, iter) => {
   return res;
 };
 
+const filter = (f, iter) => {
+  const res = [];
+
+  for (const i of iter) {
+    if (f(i)) res.push(i);
+  }
+
+  return res;
+};
+
 const products = [
   {name: '반팔티', price: 15000},
   {name: '긴팔티', price: 20000},
@@ -18,4 +28,5 @@ const products = [
 ];
 
 console.log(map(product => product.name, products));
+console.log(filter(product => product.name === '긴팔티', products));
 
