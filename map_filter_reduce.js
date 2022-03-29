@@ -45,3 +45,11 @@ console.log(filter(product => product.name === '긴팔티', products));
 const add = (acc, cur) => acc + cur;
 console.log(reduce(add, 0, map_filter_reduce(product => product.price, products)));
 console.log(reduce(add, map_filter_reduce(product => product.price, products))); // 10
+
+const totalPriceUnder25000 = reduce(
+  add,
+  filter(price => price <= 25000,
+    map(product => product.price, products))
+);
+
+console.log(totalPriceUnder25000);
