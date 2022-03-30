@@ -1,5 +1,6 @@
-// f는 (item) => item.name 이런 형태
-const map_filter_reduce = (f, iter) => {
+import {curry} from './curry';
+
+const map = curry((f, iter) => {
   const res = [];
 
   for (const i of iter) {
@@ -7,9 +8,10 @@ const map_filter_reduce = (f, iter) => {
   }
 
   return res;
-};
+});
 
-const filter = (f, iter) => {
+
+const filter = curry((f, iter) => {
   const res = [];
 
   for (const i of iter) {
@@ -17,9 +19,9 @@ const filter = (f, iter) => {
   }
 
   return res;
-};
+});
 
-const reduce = (f, acc = 0, iter) => {
+const reduce = curry((f, acc = 0, iter) => {
   if (!iter) {
     iter = acc[Symbol.iterator]();
     acc = iter.next().value;
@@ -29,7 +31,7 @@ const reduce = (f, acc = 0, iter) => {
     acc = f(acc, i);
   }
   return acc;
-};
+});
 
 const products = [
   {name: '반팔티', price: 15000},
@@ -39,12 +41,12 @@ const products = [
   {name: '바지', price: 25000}
 ];
 
-console.log(map_filter_reduce(product => product.name, products));
+console.log(map(product => product.name, products));
 console.log(filter(product => product.name === '긴팔티', products));
 
 const add = (acc, cur) => acc + cur;
-console.log(reduce(add, 0, map_filter_reduce(product => product.price, products)));
-console.log(reduce(add, map_filter_reduce(product => product.price, products))); // 10
+console.log(reduce(add, 0, map(product => product.price, products)));
+console.log(reduce(add, map(product => product.price, products))); // 10
 
 const totalPriceUnder25000 = reduce(
   add,
