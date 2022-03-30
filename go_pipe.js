@@ -8,6 +8,18 @@ const goResult = go(0,
 
 console.log(goResult); // 31
 
+const pipe = (f, ...args) => {
+  return (...numbers) => go(f(...numbers), ...args);
+};
+
+const f = pipe(
+  (a,b) => a + b,
+  a => a + 10,
+  a => a + 20
+);
+
+console.log(f(0, 1)); //
+
 const products = [
   {name: '반팔티', price: 15000},
   {name: '긴팔티', price: 20000},
