@@ -54,4 +54,34 @@ console.log(totalPriceUnder25000Ver1); // 75000
 console.log(totalPriceUnder25000Ver2); // 75000
 console.log(totalPriceUnder25000Ver3); // 75000
 
+// go에서 pipe로 분리 시키기 1
+const getProductTotalPrice1 = pipe(
+  map(product => product.price),
+  reduce((acc, cur) => acc + cur)
+);
 
+const productTotalPriceUnder25000Ver1 = go(
+  products,
+  filter(product => product.price <= 25000),
+  getProductTotalPrice1,
+);
+
+console.log(productTotalPriceUnder25000Ver1); // 75000
+
+// go에서 pipe로 분리 시키기 2
+const getProductTotalPrice2 = pipe(
+  map(product => product.price),
+  reduce((acc, cur) => acc + cur)
+);
+
+const getProductTotalPriceUnder25000 = (filteringCondition) => pipe(
+  filter(filteringCondition),
+  getProductTotalPrice2,
+)
+
+const productTotalPriceUnder25000Ver2 = go(
+  products,
+  getProductTotalPriceUnder25000(product => product.price <= 25000),
+);
+
+console.log(productTotalPriceUnder25000Ver2) // 75000
