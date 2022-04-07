@@ -32,3 +32,7 @@ L.filter = function* (f, iter) {
 
 const lazyFilterResult = L.filter(num => num > 5, [0, 10, 15]);
 console.log(...lazyFilterResult);
+
+L.entries = function *(obj) {
+  for (const k in obj) yield [k, obj[k]];
+};
