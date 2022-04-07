@@ -36,3 +36,13 @@ console.log(...lazyFilterResult);
 L.entries = function *(obj) {
   for (const k in obj) yield [k, obj[k]];
 };
+
+const join = curry((sep = ',', iter) => reduce((a, b) => `${a}${sep}${b}`, iter));
+
+console.log(join('-', [1,2,3])) // 1-2-3
+console.log(join('-', function *() {
+  yield 1;
+  yield 2;
+  yield 3;
+}())); // 1-2-3
+
